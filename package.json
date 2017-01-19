@@ -1,0 +1,11 @@
+{
+  "name": "Contacts",
+  "version": "0.0.0",
+  "description": "A simple contacts agenda",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rafael Hiroki",
+  "license": "ISC"
+}
