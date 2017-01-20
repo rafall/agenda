@@ -3,14 +3,15 @@ var lastID = 0;
 
 function User(name, password, email) {
 
-	var contacts 	= []; // Tem nome, email, telefone
-	var password 	= password;
-
-	this.name		= name;
-	this.email		= email;
-	this.id 		= ++lastID;
+	var contacts 	  = []; // Tem nome, email, telefone
+	var password 	  = password;
+	var lastContactID = 0;
+	this.name		  = name;
+	this.email		  = email;
+	this.id 		  = ++lastID;
 	
 	this.addContact = function(contact) {
+		contact.id = ++lastContactID;
 		contacts.push(contact);
 		return contact;
 	};
@@ -24,6 +25,18 @@ function User(name, password, email) {
 	this.all = function() {
 		return contacts;
 	};
+
+	this.delete = function(id) {
+		var deletedContact;
+	    for(var i=0, l=contacts.length; i < l; i++) {
+	      if(contacts[i].id === id){
+	        deletedContact = contacts[i];
+	        contacts.splice(i, 1);
+	        break;
+	      }
+	    }
+	    return deletedNote;
+	}
 
 	console.log('Usuário criado com ID: ' + this.id) + '\n';
 };
