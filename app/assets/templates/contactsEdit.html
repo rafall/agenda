@@ -1,0 +1,22 @@
+<h2>{{contact.name}}</h2>
+<form>
+	<div>
+		<label for="name">Full Name</label>
+		<input class="form-control" type="text" id="name" name="name" ng-model="contact.name">
+		
+	</div>
+
+	<div>
+		<label for="email">E-mail</label>
+		<input class="form-control" type="email" id="email" name="email" ng-model="contact.email"></input>
+	</div>
+
+	<div>
+		<label for="phone">Phone</label>
+		<input class="form-control" type="text" id="phone" name="phone" ng-model="contact.phone"></input>
+	</div>
+
+	<button type="submit" name="action" ng-click="saveContact(contact)" value="Save" class="waves-effect waves-light light-blue accent-2 btn">
+	Save<i class="material-icons right">send</i>
+	</button>
+</form>

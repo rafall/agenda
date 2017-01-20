@@ -1,0 +1,7 @@
+<h2>{{user.name}}'s Contacts</h2>
+<div class="section card horizontal" ng-repeat="contact in contacts">
+	<div class="card-content">
+		<h5><a ng-href="#!/users/{{user.id}}/contacts/{{contact.id}}/edit">{{contact.name}}</a></h5>
+		<p>{{contact.email}}<br>{{contact.phone}}</p>	
+	</div>
+</div>

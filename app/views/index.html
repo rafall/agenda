@@ -8,7 +8,6 @@
 	<!--Import materialize.css-->
 	<link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
 
-
 </head>
 <body>
 
@@ -24,17 +23,11 @@
 	<div class="container">
 		<div class="row">
 			<!-- Mostra contatos -->
-			<div ng-controller="ContactsShowController" class="col s6">
-				<h2>{{user.name}}'s Contacts</h2>
-				<div class="section card horizontal" ng-repeat="contact in contacts">
-					<div class="card-content">
-						<h5>{{contact.name}}</h5>
-						<p>{{contact.email}}<br>{{contact.phone}}</p>	
-					</div>
-				</div>
+			<div ng-view class="col s6">
 			</div>
-			<div class="col s1"></div>
+
 			<!-- Cadastra contato novo -->
+			<!-- 
 			<div ng-controller="ContactsCreateController" class="col s4">
 				<h2>Add Contact</h2>
 				<form>
@@ -58,7 +51,7 @@
 					</button>
 				</form>
 			</div>	
-
+ -->
 		</div>
 		
 	</div>
@@ -67,6 +60,10 @@
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="assets/js/materialize.min.js"></script>
 	<script src="assets/js/angular.min.js"></script>
+	<script src="assets/js/angular-route.js"></script>
+	<script src="assets/js/angular-resource.js"></script>
 	<script src="assets/js/app.js"></script>
+	<script src="assets/js/routes.js"></script>
 	<script src="assets/js/services/user.js"></script>
+	<script src="assets/js/services/contact.js"></script>
 </html>

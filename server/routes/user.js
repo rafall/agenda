@@ -53,7 +53,7 @@ module.exports = function(app) {
 		}
 	});
 
-	app.get('/users/:userid/contacts/:id', function() {
+	app.get('/users/:userid/contacts/:id', function(request, response) {
 		var user = findUser(parseInt(request.params.userid, 10));
 		var contactID = parseInt(request.params.id, 10);
 		response.json(user.get(contactID) || {});

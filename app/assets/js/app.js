@@ -1,4 +1,4 @@
-angular.module('Agenda', [])
+angular.module('Agenda', ['ngRoute', 'ngResource'])
 
     .controller('ContactsShowController', function(userAuth, $scope, $http){
 
@@ -25,4 +25,15 @@ angular.module('Agenda', [])
                     $scope.contact = {};
                 });
         };
+    })
+
+    .controller('ContactsEditController', function(Contact, $scope, $routeParams, $http) {
+        $http.get('/users/' + $routeParams.userid + '/contacts/' + $routeParams.id)
+            .then(function(response) {
+                $scope.contact = response.data;
+            });
+
+        $scope.saveContact = function(contact) {
+            console.log('Ainda não faz nada\n');
+        }
     });
