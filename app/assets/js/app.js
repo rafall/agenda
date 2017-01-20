@@ -11,17 +11,17 @@ angular.module('Agenda', [])
                     .then(function(response) {
                         $scope.contacts = response.data;
                     });
-            })
-        
-            
+            });
+
     })
 
-    .controller('ContactsCreateController', function(userAuth){
+    .controller('ContactsCreateController', function(userAuth, $scope, $http){
         $scope.contact = {};
 
         $scope.saveContact = function() {
             $http.post('/users/' + userAuth.getUser().id + '/contacts', $scope.contact)
                 .then(function() {
+                    console.log('Contato ' + $scope.contact.name + ' adicionado.\n');
                     $scope.contact = {};
                 });
         };

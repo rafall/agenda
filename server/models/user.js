@@ -36,7 +36,7 @@ function User(name, password, email) {
 	      }
 	    }
 	    return deletedNote;
-	}
+	};
 
 	console.log('Usuário criado com ID: ' + this.id) + '\n';
 };
