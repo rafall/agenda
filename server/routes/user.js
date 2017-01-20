@@ -24,6 +24,7 @@ function findUser(id) {
 // Mas fica pra depois
 
 module.exports = function(app) {
+
 	app.get('/users/:id', function(request, response) {
 		var user = findUser(parseInt(request.params.id, 10));
 		

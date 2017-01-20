@@ -1,24 +1,28 @@
 angular.module('Agenda', [])
-    .controller('ContactsShowController', function($scope, $http){
+
+    .controller('ContactsShowController', function(userAuth, $scope, $http){
+
         $http.get('/users/1')
             .then(function(response) {
                 $scope.user = response.data;
+                userAuth.setUser($scope.user);
 
-                $http.get('/users/' + $scope.user.id + '/contacts')
+                $http.get('/users/' + userAuth.getUser().id + '/contacts')
                     .then(function(response) {
                         $scope.contacts = response.data;
                     });
-            });
-
+            })
         
+            
     })
-    .controller('ContactsCreateController', function(){
+
+    .controller('ContactsCreateController', function(userAuth){
         $scope.contact = {};
 
         $scope.saveContact = function() {
-            $http.post('/users/:userid/contacts', $scope.contact)
+            $http.post('/users/' + userAuth.getUser().id + '/contacts', $scope.contact)
                 .then(function() {
-                    $scope.note = {};
+                    $scope.contact = {};
                 });
         };
     });
