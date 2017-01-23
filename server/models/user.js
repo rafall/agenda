@@ -35,7 +35,19 @@ function User(name, password, email) {
 	        break;
 	      }
 	    }
-	    return deletedNote;
+	    return deletedContact;
+	};
+
+	this.updateContact = function(id, contact) {
+		var updatedContact = {};
+		for(var i=0, l=contacts.length; i < l; i++) {
+	      if(contacts[i].id === id){
+	        contacts[i] = contact;
+	        break;
+	      }
+	    }
+
+	    return updatedContact;
 	};
 
 	console.log('Usuário criado com ID: ' + this.id) + '\n';

@@ -27,13 +27,24 @@ angular.module('Agenda', ['ngRoute', 'ngResource'])
         };
     })
 
-    .controller('ContactsEditController', function(Contact, $scope, $routeParams, $http) {
-        $http.get('/users/' + $routeParams.userid + '/contacts/' + $routeParams.id)
+    .controller('ContactsEditController', function(Contact, $scope, $routeParams, $http, $location) {
+        $http.get('/users/' + $routeParams.userid + '/contacts/' + $routeParams.contactid)
             .then(function(response) {
                 $scope.contact = response.data;
             });
 
         $scope.saveContact = function(contact) {
-            console.log('Ainda não faz nada\n');
-        }
+            $http.put('/users/' + $routeParams.userid + '/contacts/' + $routeParams.contactid, $scope.contact)
+                .then(function() {
+                    $location.path('/');
+                });
+        };
+
+        $scope.deleteContact = function() {
+            $http.delete('/users/' + $routeParams.userid + '/contacts/' + $routeParams.contactid)
+                .then(function() {
+                    $location.path('/');
+                });
+        };
+
     });

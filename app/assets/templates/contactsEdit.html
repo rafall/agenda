@@ -1,4 +1,4 @@
-<h2>{{contact.name}}</h2>
+<h2>Edit Contact</h2>
 <form>
 	<div>
 		<label for="name">Full Name</label>
@@ -18,5 +18,8 @@
 
 	<button type="submit" name="action" ng-click="saveContact(contact)" value="Save" class="waves-effect waves-light light-blue accent-2 btn">
 	Save<i class="material-icons right">send</i>
+	</button>
+	<button type="submit" name="action" ng-click="deleteContact()" value="Save" class="waves-effect waves-light red accent-4 btn">
+	Delete
 	</button>
 </form>

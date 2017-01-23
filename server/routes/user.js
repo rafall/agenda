@@ -20,7 +20,7 @@ function findUser(id) {
 }
 
 // Posso criar um middleware que sempre pega o usuário que
-// fez a requisição e colocar no request 
+// fez a requisição e colocar no request (ou não)
 // Mas fica pra depois
 
 module.exports = function(app) {
@@ -53,9 +53,21 @@ module.exports = function(app) {
 		}
 	});
 
-	app.get('/users/:userid/contacts/:id', function(request, response) {
-		var user = findUser(parseInt(request.params.userid, 10));
-		var contactID = parseInt(request.params.id, 10);
+	app.get('/users/:userid/contacts/:contactid', function(request, response) {
+		var user 	  = findUser(parseInt(request.params.userid, 10));
+		var contactID = parseInt(request.params.contactid, 10);
 		response.json(user.get(contactID) || {});
 	});
+
+	app.put('/users/:userid/contacts/:contactid', function(request, response) {
+		var user = findUser(parseInt(request.params.userid, 10));
+        response.json(user.updateContact(parseInt(request.params.contactid), request.body));
+
+	});
+
+    app.delete('/users/:userid/contacts/:contactid', function(request, response) {
+        var user = findUser(parseInt(request.params.userid, 10));
+        response.json(user.delete(parseInt(request.params.contactid)));
+
+    });
 };
