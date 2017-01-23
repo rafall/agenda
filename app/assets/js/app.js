@@ -15,7 +15,7 @@ angular.module('Agenda', ['ngRoute', 'ngResource'])
 
     })
 
-    .controller('ContactsCreateController', function(userAuth, $scope, $http){
+    .controller('ContactsCreateController', function(userAuth, $scope, $http, $location){
         $scope.contact = {};
 
         $scope.saveContact = function() {
@@ -23,6 +23,7 @@ angular.module('Agenda', ['ngRoute', 'ngResource'])
                 .then(function() {
                     console.log('Contato ' + $scope.contact.name + ' adicionado.\n');
                     $scope.contact = {};
+                    $location.path('/');
                 });
         };
     })

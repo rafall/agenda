@@ -7,6 +7,11 @@ angular.module('Agenda')
 				controller: "ContactsShowController"
 			})
 
+			.when('/users/:userid/contacts/new', {
+				templateUrl: "assets/templates/contactsNew.html",
+				controller: "ContactsCreateController"
+			})
+
 			.when('/users/:userid/contacts/:contactid/edit', {
 				templateUrl: "assets/templates/contactsEdit.html",
 				controller: "ContactsEditController"
