@@ -1,8 +1,8 @@
 angular.module('Agenda', ['ngRoute', 'ngResource'])
 
     .controller('ContactsShowController', function(userAuth, $scope, $http){
-
-        $http.get('/users/1')
+        //TODO precisa modificar depois que tiver login
+        $http.get('/users/1') 
             .then(function(response) {
                 $scope.user = response.data;
                 userAuth.setUser($scope.user);

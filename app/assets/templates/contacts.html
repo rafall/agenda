@@ -1,10 +1,24 @@
 <h2>{{user.name}}'s Contacts</h2>
-<div class="section card horizontal" ng-repeat="contact in contacts">
+<div>
+    Search: <input type="text" ng-model="search.input.$">
+</div><br>
+<div class="section card horizontal">
 	<div class="card-content">
-		<h5><a ng-href="#!/users/{{user.id}}/contacts/{{contact.id}}/edit">{{contact.name}}</a></h5>
-		<p>{{contact.email}}<br>{{contact.phone}}</p>	
+        <table class="highlight bordered">
+            <tbody>
+                <tr ng-repeat="contact in contacts | filter: search.input">
+                    <td><a ng-href="#!/users/{{user.id}}/contacts/{{contact.id}}/edit"><b>{{contact.name}}</b></a></td>
+                    <td>{{contact.email}}</td>
+                    <td>{{contact.phone}}</td>
+                </tr>
+            </tbody>
+        </table>
+		<!-- <h5><a ng-href="#!/users/{{user.id}}/contacts/{{contact.id}}/edit">{{contact.name}}</a></h5>
+		<p>{{contact.email}}<br>{{contact.phone}}</p>	 -->
 	</div>
 </div>
 <div class="fixed-action-btn">
-        <a class="btn-floating btn-large waves-effect waves-light red" ng-href="#!/users/{{user.id}}/contacts/new"><i class="material-icons">add</i></a>  
-    </div>
+        <a class="btn-floating btn-large waves-effect waves-light red" ng-href="#!/users/{{user.id}}/contacts/new">
+            <i class="material-icons">add</i>
+        </a>  
+</div>
