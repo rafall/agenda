@@ -12,6 +12,9 @@ function User(name, password, email) {
 	
 	this.addContact = function(contact) {
 		contact.id = ++lastContactID;
+		if(!contact.photo){
+			contact.photo = '/assets/images/avatar';
+		}
 		contacts.push(contact);
 		return contact;
 	};

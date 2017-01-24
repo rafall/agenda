@@ -1,11 +1,11 @@
-var User = require('../models/user');
-var _ = require('underscore');
+var User    = require('../models/user');
+var _       = require('underscore');
 
 var users = [];
 
 // Testes
 var firstUser = new User('Jeff', '1234', 'jeff@zeldman.com');
-firstUser.addContact({id: 1, name: 'Alyssa Nicoll', email: 'alyssa@nicoll.com', phone: '55555555'});
+firstUser.addContact({id: 1, name: 'Alyssa Nicoll', email: 'alyssa@nicoll.com', phone: '55555555', photo: '/assets/images/avatar'});
 firstUser.addContact({id: 2, name: 'Jordan Wade'  , email: 'jordan@wade.com'  , phone: '88888888'});
 users.push(firstUser);
 // Fim dos Testes
