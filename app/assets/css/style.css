@@ -9,8 +9,18 @@
 
 .table-image {
     width: 64px;
+
 }
 
+#logincard {
+    width: 40%;
+}
+
+#loginbtn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 /*.fixed-action-btn {
     bottom: auto;
 }

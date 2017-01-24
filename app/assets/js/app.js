@@ -1,5 +1,9 @@
 angular.module('Agenda', ['ngRoute', 'ngResource'])
 
+    .controller('LoginController', function($scope){
+        $scope.user = {};
+    })
+
     .controller('ContactsShowController', function(userAuth, $scope, $http){
         //TODO precisa modificar depois que tiver login
         $http.get('/users/1') 

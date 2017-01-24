@@ -1,0 +1,48 @@
+<div class="container" id="logincard">
+<h1 style="text-align: center;">Login</h1>
+
+    <div class="card small">
+
+        <div class="card-content">
+            <form name="loginForm">
+                <div class="input-field">
+                    <i class="material-icons prefix">perm_identity</i>
+                    <input type="email" id="email" name="email" ng-model="user.email" required>
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="input-field">
+                    <i class="material-icons prefix">vpn_key</i>
+                    <input type="password" id="password" name="password" ng-model="user.password" required>
+                    <label for="password">Password</label>
+                </div>
+
+                <div class="col s6">
+                    <input type="checkbox" id="remember"/>
+                    <label for="remember">Remember me</label>
+                </div>
+                    
+                <div class="col s6">
+                    <button 
+                        type="submit" 
+                        name="action" 
+                        ng-click="login()" 
+                        ng-disabled="loginForm.$invalid" 
+                        value="Save" 
+                        class="waves-effect waves-light amber accent-2 btn"
+                        id="loginbtn"
+                        >Login<i class="material-icons right">send</i>
+                    </button>    
+                </div>
+                
+            </form>    
+        </div>
+        <div class="card-action" >
+            <a href="#">Register</a>
+            <a href="#">Forgot password?</a>
+        </div>
+    
+    </div>
+    
+        
+</div>
