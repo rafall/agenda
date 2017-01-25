@@ -23,8 +23,32 @@ angular.module('Agenda', ['ngRoute', 'ngResource'])
         $scope.contact = {};
 
         $scope.saveContact = function() {
-            $http.post('/users/' + userAuth.getUser().id + '/contacts', $scope.contact)
-                .then(function() {
+            var formData = new FormData;
+
+            for(key in $scope.contact) {
+                formData.append(key, $scope.contact[key]);
+            }
+            var file = $('#file')[0].files[0];
+
+            // Verifica se tem um arquivo e a extensão dele
+            if(file) {
+                console.log(file);
+                var extn = file.name.split(".").pop();
+                if (extn === 'png' || extn === 'jpg' || extn === 'jpeg') {
+                    console.log("File extension not allowed!");
+                    formData.append('photo', file);
+                }
+                //TODO precisa ter um jeito de avisar que não pode a extensão que ele tentou
+                
+            }
+            
+
+            $http.post('/users/' + userAuth.getUser().id + '/contacts', formData, {
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            }).then(function() {
                     console.log('Contato ' + $scope.contact.name + ' adicionado.\n');
                     $scope.contact = {};
                     $location.path('/');

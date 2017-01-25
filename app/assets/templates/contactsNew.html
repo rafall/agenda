@@ -1,5 +1,5 @@
 <h2>New Contact</h2>
-<form name="contactForm" novalidate="">
+<form name="contactForm" novalidate="" ng-submit="saveContact()">
 
     <!-- Validation messages -->
     <small ng-show="contactForm.name.$invalid && contactForm.name.$touched" class="red-text">Name is required.</small>
@@ -22,10 +22,12 @@
         <label for="email">E-mail</label>
     </div>
 
-    <button 
+        <label for="email">Photo</label><br>
+        <input type="file" id="file" name="file">
+    <br><br>
+    <button
         type="submit" 
-        name="action" 
-        ng-click="saveContact()"
+        name="action"
         ng-disabled="contactForm.$invalid"
         class="waves-effect waves-light light-blue accent-2 btn">
         Save<i class="material-icons right">send</i>

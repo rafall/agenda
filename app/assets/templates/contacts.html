@@ -17,7 +17,9 @@
         <table class="highlight bordered">
             <tbody>
                 <tr ng-repeat="contact in contacts | filter: search.input">
-                    <td class="table-image"><img ng-src="{{contact.photo}}" alt="" class="circle avatar"></td>
+                    <td class="table-image">
+                        <a ng-href="#!/users/{{user.id}}/contacts/{{contact.id}}/edit"><img ng-src="{{contact.photo}}" alt="" class="circle avatar"></a>
+                    </td>
                     <td>
                         <a ng-href="#!/users/{{user.id}}/contacts/{{contact.id}}/edit" class="amber-text text-accent-4">
                             <b>{{contact.name}}</b>
