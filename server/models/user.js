@@ -1,6 +1,11 @@
 var _ = require('underscore');
 var lastID = 0;
 
+function UserException(message) {
+	this.message = message;
+	this.name = "UserException";
+}
+
 function User(name, password, email) {
 
 	var contacts 	  = []; // Tem nome, email, telefone
@@ -20,9 +25,15 @@ function User(name, password, email) {
 	};
 
 	this.get = function(id) {
-		return _.find(contacts, function(contact) {
+		var contact = _.find(contacts, function(contact) {
 			return contact.id === id;
 		});
+
+		if(contact) {
+			return contact;
+		} else {
+			throw new UserException('Contact not found!');
+		}
 	};
 
 	this.all = function() {
@@ -44,16 +55,16 @@ function User(name, password, email) {
 	this.updateContact = function(id, contact) {
 		var updatedContact = {};
 		for(var i=0, l=contacts.length; i < l; i++) {
-	      if(contacts[i].id === id){
-	        contacts[i] = contact;
-	        break;
-	      }
+			if(contacts[i].id === id){
+				contacts[i] = contact;
+				break;
+			}
 	    }
 
 	    return updatedContact;
 	};
 
-	console.log('Usuário criado com ID: ' + this.id) + '\n';
+	console.log('User created!\nID: ' + this.id) + '\n';
 };
 
 module.exports = User;

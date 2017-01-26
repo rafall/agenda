@@ -12,13 +12,21 @@ firstUser.addContact({id: 2, name: 'Jordan Wade'  , email: 'jordan@wade.com'  , 
 users.push(firstUser);
 // Fim dos Testes
 
+function UserException(message) {
+    this.message = message;
+    this.name = "UserException";
+}
+
 function findUser(id) {
-	//console.log('Buscando usuário com id ' + id + '\n');
 	var user = _.find(users, function(user) {
 		return user.id === id;
 	});
 
-	return user;
+    if(user) {
+        return user;    
+    } else {
+        throw new UserException('User not found!');
+    }
 }
 
 // Posso criar um middleware que sempre pega o usuário que
@@ -54,7 +62,6 @@ module.exports = function(app) {
             var newContact = request.body;
             // Verify if a photo was uploaded and if the file extension matches
             if(request.files[0]) {
-                console.log()
                 var filetypes = /jpeg|jpg|png/;
                 var extname = filetypes.test(path.extname(request.files[0].originalname));
 
@@ -64,22 +71,51 @@ module.exports = function(app) {
                 } else {
                     console.log('Extension for file provided ' +  path.extname(request.files[0].originalname));
                     console.log('File extension did not match with ' + filetypes);
+                    response.sendStatus(400);
                 }
             }
             
-			response.json(user.addContact(request.body));
+			response.status(201).json(user.addContact(request.body));
 		}
 	});
 
 	app.get('/users/:userid/contacts/:contactid', function(request, response) {
-		var user 	  = findUser(parseInt(request.params.userid, 10));
+		var contact;
+        var user 	  = findUser(parseInt(request.params.userid, 10));
 		var contactID = parseInt(request.params.contactid, 10);
-		response.json(user.get(contactID) || {});
+        
+        try {
+            contact = user.get(contactID);
+        } catch(e) {
+            contact = undefined;
+            console.log(e.message);
+        }
+
+		response.json(contact);
 	});
 
 	app.put('/users/:userid/contacts/:contactid', function(request, response) {
-		var user = findUser(parseInt(request.params.userid, 10));
-        response.json(user.updateContact(parseInt(request.params.contactid), request.body));
+        var user;
+        var contact;
+        var status;
+        try {
+            user = findUser(parseInt(request.params.userid, 10));
+            try {
+                contact = user.updateContact(parseInt(request.params.contactid), request.body);
+                status = 200;
+            } catch(e) {
+                console.log(e.message);
+                contact = undefined;
+                status = 400;
+            }
+            
+        } catch(e) {
+            contact = undefined;
+            status = 400;
+        }
+
+        response.status(status).json(contact);
+		
 
 	});
 

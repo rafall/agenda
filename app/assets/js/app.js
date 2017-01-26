@@ -16,7 +16,6 @@ angular.module('Agenda', ['ngRoute', 'ngResource'])
                         $scope.contacts = response.data;
                     });
             });
-
     })
 
     .controller('ContactsCreateController', function(userAuth, $scope, $http, $location){
@@ -35,8 +34,9 @@ angular.module('Agenda', ['ngRoute', 'ngResource'])
                 console.log(file);
                 var extn = file.name.split(".").pop();
                 if (extn === 'png' || extn === 'jpg' || extn === 'jpeg') {
-                    console.log("File extension not allowed!");
                     formData.append('photo', file);
+                } else {
+                    console.log("File extension not allowed!");
                 }
                 //TODO precisa ter um jeito de avisar que não pode a extensão que ele tentou
                 
@@ -49,7 +49,7 @@ angular.module('Agenda', ['ngRoute', 'ngResource'])
                     'Content-Type': undefined
                 }
             }).then(function() {
-                    console.log('Contato ' + $scope.contact.name + ' adicionado.\n');
+                    console.log('Contat ' + $scope.contact.name + ' added.\n');
                     $scope.contact = {};
                     $location.path('/');
                 });
@@ -59,7 +59,13 @@ angular.module('Agenda', ['ngRoute', 'ngResource'])
     .controller('ContactsEditController', function(Contact, $scope, $routeParams, $http, $location) {
         $http.get('/users/' + $routeParams.userid + '/contacts/' + $routeParams.contactid)
             .then(function(response) {
-                $scope.contact = response.data;
+
+                if(response.data) {
+                    $scope.contact = response.data;
+                } else {
+                    $location.path('/');
+                }
+                
             });
 
         $scope.saveContact = function(contact) {

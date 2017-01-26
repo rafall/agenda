@@ -7,6 +7,13 @@ app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.all('*', function(request, response, next) {
+    if(request.secure) {
+        return next();
+    }
+    response.redirect('https://localhost:3443/');
+});
+
 app.get('/', function(request, response) {
 	response.sendFile('index.html', {root: __dirname + '/../app/views'});
 });
