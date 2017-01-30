@@ -64,6 +64,10 @@ function User(name, password, email) {
 	    return updatedContact;
 	};
 
+	this.getPassword = function() {
+		return password;
+	}
+
 	console.log('User created!\nID: ' + this.id) + '\n';
 };
 

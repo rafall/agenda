@@ -13,12 +13,9 @@
 <body>
 
 	<header>
-		<nav ng-controller="ContactsShowController">
+		<nav>
 			<div class="nav-wrapper amber">
 			  <a href="#!/" class="brand-logo">Agenda</a>
-			  <ul id="nav-mobile" class="right hide-on-med-and-down">
-		        <li><a href="#!/login">Hello, {{user.name}}</a></li>
-		      </ul>
 			</div>
 		</nav>
 	</header>
@@ -65,6 +62,7 @@
 	<script src="assets/js/angular.min.js"></script>
 	<script src="assets/js/angular-route.js"></script>
 	<script src="assets/js/angular-resource.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
 	<script src="assets/js/app.js"></script>
 	<script src="assets/js/routes.js"></script>
 	<script src="assets/js/services/user.js"></script>

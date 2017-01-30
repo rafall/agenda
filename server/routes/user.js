@@ -2,10 +2,13 @@ var User    = require('../models/user');
 var _       = require('underscore');
 var multer  = require('multer');
 var path    = require('path');
+var jwt = require('jsonwebtoken');
 
 var users  = [];
 var upload = multer( {dest: __dirname + '/../../app/assets/images'} );
 // Testes
+var secret = 'keyboard cat';
+
 var firstUser = new User('Jeff', '1234', 'jeff@zeldman.com');
 firstUser.addContact({id: 1, name: 'Alyssa Nicoll', email: 'alyssa@nicoll.com', phone: '55555555', photo: '/assets/images/QvqUlMKN'});
 firstUser.addContact({id: 2, name: 'Jordan Wade'  , email: 'jordan@wade.com'  , phone: '88888888'});
@@ -29,13 +32,78 @@ function findUser(id) {
     }
 }
 
+function findUserByEmail(email) {
+    var user = _.find(users, function(user) {
+        return user.email === email;
+    });
+
+    if(user) {
+        return user;    
+    } else {
+        throw new UserException('User ' + email + ' not found!');
+    }
+}
+
 // Posso criar um middleware que sempre pega o usuário que
 // fez a requisição e colocar no request (ou não)
 // Mas fica pra depois
 
 module.exports = function(app) {
 
+    app.post('/login', function(request, response) {
+        console.log('Receiving POST request for /login');
+        console.log(request.body);
+        try {
+            var user = findUserByEmail(request.body.email, 10);
+            if(user.getPassword() != request.body.password) {
+                response.json({ success: false, message: 'Authentication failed. Wrong password.' });
+            } else {
+                
+                var token = jwt.sign(user, secret, {
+                    expiresIn: 60*60*24
+                });
+                
+                response.json({
+                    success: true,
+                    message: 'Logged in!',
+                    token: token,
+                    user: user
+                });
+            }
+        } catch(e) {
+            response.json({
+                success: false,
+                message: e.message
+            });
+        }
+        
+    });
+
+    app.use(function(request, response, next) {
+        var token = request.body.token || request.query.token || request.headers['x-access-token'];
+
+        if(token) {
+            jwt.verify(token, secret, function(error, decoded) {
+                if(error) {
+                    return response.json( {
+                        success: false,
+                        message: 'Failed to authenticate token.'
+                    });
+                } else {
+                    request.decoded = decoded;
+                    next();
+                }
+            });
+        } else {
+            return response.status(403).json({
+                success: false,
+                message: 'Token not provided.'
+            });
+        }
+    });
+
 	app.get('/users/:id', function(request, response) {
+        //Colocar try catch
 		var user = findUser(parseInt(request.params.id, 10));
 		
 		if(!user) {
@@ -48,6 +116,7 @@ module.exports = function(app) {
 	});
 
 	app.get('/users/:userid/contacts', function(request, response) {
+        //TODO Colocar try catch
 		var user = findUser(parseInt(request.params.userid, 10));
 
 		response.json(user.all());
@@ -55,12 +124,12 @@ module.exports = function(app) {
 
 	app.post('/users/:userid/contacts', upload.any(), function(request, response) {
 		var user = findUser(parseInt(request.params.userid, 10));
-
+        //TODO Colocar try catch
 		if(request.body === {}) {
 			response.sendStatus(400);
 		} else {
             var newContact = request.body;
-            // Verify if a photo was uploaded and if the file extension matches
+            // Verifica se uma foto foi upada e se a extensão é válida
             if(request.files[0]) {
                 var filetypes = /jpeg|jpg|png/;
                 var extname = filetypes.test(path.extname(request.files[0].originalname));
@@ -81,16 +150,22 @@ module.exports = function(app) {
 
 	app.get('/users/:userid/contacts/:contactid', function(request, response) {
 		var contact;
-        var user 	  = findUser(parseInt(request.params.userid, 10));
-		var contactID = parseInt(request.params.contactid, 10);
-        
+        var contactID = parseInt(request.params.contactid, 10);
+
         try {
-            contact = user.get(contactID);
+            var user = findUser(parseInt(request.params.userid, 10));
+
+            try {
+                contact = user.get(contactID);
+            } catch(e) {
+                contact = undefined;
+                console.log(e.message);
+            }
         } catch(e) {
             contact = undefined;
             console.log(e.message);
         }
-
+        
 		response.json(contact);
 	});
 
