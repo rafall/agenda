@@ -6,6 +6,7 @@ function UserException(message) {
 	this.name = "UserException";
 }
 
+//TODO fazer um model dos Contatos também
 function User(name, password, email) {
 
 	var contacts 	  = []; // Tem nome, email, telefone
@@ -63,6 +64,10 @@ function User(name, password, email) {
 
 	    return updatedContact;
 	};
+
+	this.getPassword = function() {
+		return password;
+	}
 
 	console.log('User created!\nID: ' + this.id) + '\n';
 };

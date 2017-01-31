@@ -7,10 +7,12 @@ app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Para todas as rotas, verifica se o request é seguro
 app.all('*', function(request, response, next) {
     if(request.secure) {
         return next();
     }
+    //TODO verificar se isso funciona
     response.redirect('https://localhost:3443/');
 });
 

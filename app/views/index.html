@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html ng-app='Agenda'>
 <head>
-	<meta charset="utf-8">
-	<title>Agenda</title>
-	<!--Import Google Icon Font-->
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<!--Import materialize.css-->
-	<link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <meta charset="utf-8">
+    <title>Agenda</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
 </head>
 <body>
 
-	<header>
-		<nav ng-controller="ContactsShowController">
-			<div class="nav-wrapper amber">
-			  <a href="#!/" class="brand-logo">Agenda</a>
-			  <ul id="nav-mobile" class="right hide-on-med-and-down">
-		        <li><a href="#!/login">Hello, {{user.name}}</a></li>
-		      </ul>
-			</div>
-		</nav>
-	</header>
+    <header>
+        <nav>
+            <div class="nav-wrapper amber">
+              <a href="#!/" class="brand-logo">Agenda</a>
+            </div>
+        </nav>
+    </header>
 
-	<main>
-		<div class="container">
-			<div class="row">
+    <main>
+        <div class="container">
+            <div class="row">
 
-				<!-- Renderiza os templates -->
-				<div ng-view class="col s10 offset-s1">
-				</div>
+                <!-- Renderiza os templates -->
+                <div ng-view class="col s10 offset-s1">
+                </div>
 
-			</div>
-			
-		</div>
-	</main>
-	
+            </div>
+            
+        </div>
+    </main>
+    
 </body>
 <footer class="page-footer amber darken-2">
   <div class="container">
@@ -60,13 +57,14 @@
     </div>
   </div>
 </footer>
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-	<script src="assets/js/materialize.min.js"></script>
-	<script src="assets/js/angular.min.js"></script>
-	<script src="assets/js/angular-route.js"></script>
-	<script src="assets/js/angular-resource.js"></script>
-	<script src="assets/js/app.js"></script>
-	<script src="assets/js/routes.js"></script>
-	<script src="assets/js/services/user.js"></script>
-	<script src="assets/js/services/contact.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="assets/js/materialize.min.js"></script>
+    <script src="assets/js/angular.min.js"></script>
+    <script src="assets/js/angular-route.js"></script>
+    <script src="assets/js/angular-resource.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/routes.js"></script>
+    <script src="assets/js/services/user.js"></script>
+    <script src="assets/js/services/contact.js"></script>
 </html>

@@ -3,13 +3,26 @@ angular.module('Agenda')
 		$routeProvider
 
 			.when('/', {
-				templateUrl: "assets/templates/contacts.html",
-				controller: "ContactsShowController"
+				redirectTo: '/login'
 			})
 
 			.when('/login', {
 				templateUrl: "assets/templates/login.html",
 				controller: "LoginController"
+			})
+
+			.when('/register', {
+				templateUrl: "assets/templates/register.html",
+				controller: "RegisterController"
+			})
+
+			.when('/logout', {
+				controller: "LogoutController"
+			})
+
+			.when('/users/:userid/contacts', {
+				templateUrl: "assets/templates/contacts.html",
+				controller: "ContactsShowController"
 			})
 
 			.when('/users/:userid/contacts/new', {

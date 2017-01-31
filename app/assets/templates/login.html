@@ -4,7 +4,7 @@
     <div class="card small">
 
         <div class="card-content">
-            <form name="loginForm">
+            <form name="loginForm" ng-submit="login()">
                 <div class="input-field">
                     <i class="material-icons prefix">perm_identity</i>
                     <input type="email" id="email" name="email" ng-model="user.email" required>
@@ -25,20 +25,19 @@
                 <div class="col s6">
                     <button 
                         type="submit" 
-                        name="action" 
-                        ng-click="login()" 
+                        name="action"
                         ng-disabled="loginForm.$invalid" 
                         value="Save" 
                         class="waves-effect waves-light amber accent-2 btn"
-                        id="loginbtn"
-                        >Login<i class="material-icons right">send</i>
+                        id="loginbtn">
+                        Login<i class="material-icons right">send</i>
                     </button>    
                 </div>
                 
             </form>    
         </div>
         <div class="card-action" >
-            <a href="#">Register</a>
+            <a href="#!/register">Register</a>
             <a href="#">Forgot password?</a>
         </div>
     

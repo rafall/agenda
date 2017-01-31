@@ -5,6 +5,8 @@
 .avatar {
     max-height: 70px;
     max-width: 70px;
+    min-height: 70px;
+    min-width: 70px;
 }
 
 .table-image {
@@ -21,10 +23,7 @@
     margin-left: auto;
     margin-right: auto;
 }
-/*.fixed-action-btn {
-    bottom: auto;
-}
-*/
+
 body {
     display: flex;
     min-height: 100vh;

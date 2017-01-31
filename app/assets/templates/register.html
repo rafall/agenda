@@ -1,0 +1,32 @@
+<h2>Register</h2>
+<form name="registerForm" novalidate="" ng-submit="registerUser()">
+
+    <!-- Validation messages -->
+    <small ng-show="registerForm.name.$invalid && registerForm.name.$touched" class="red-text">Name is required.</small>
+    <small ng-show="registerForm.email.$invalid && registerForm.email.$touched" class="red-text">Enter a valid email.</small>
+    <small ng-show="registerForm.password.$invalid && registerForm.password.$touched" class="red-text">Password is required.</small>
+
+    <!-- Input fields -->
+    <div class="input-field">
+        <input type="text" id="name" name="name" ng-model="user.name" required>
+        <label for="name">Full Name</label>
+    </div>
+
+    <div class="input-field">
+        <input type="email" id="email" name="email" ng-model="user.email" required>
+        <label for="email">E-mail</label>
+    </div>
+
+    <div class="input-field">
+        <input type="password" id="password" name="password" ng-model="user.password" required>
+        <label for="password">Password</label>
+    </div>
+
+    <button
+        type="submit" 
+        name="action"
+        ng-disabled="registerForm.$invalid"
+        class="waves-effect waves-light light-blue accent-2 btn">
+        Save<i class="material-icons right">send</i>
+    </button>
+</form>
