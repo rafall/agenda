@@ -11,6 +11,11 @@ angular.module('Agenda')
 				controller: "LoginController"
 			})
 
+			.when('/register', {
+				templateUrl: "assets/templates/register.html",
+				controller: "RegisterController"
+			})
+
 			.when('/logout', {
 				controller: "LogoutController"
 			})

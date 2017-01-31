@@ -29,6 +29,33 @@ angular.module('Agenda', ['ngRoute', 'ngResource', 'ngCookies'])
         $location.path('/login');
     })
 
+    .controller('RegisterController', function($scope, $location, $http){
+        $scope.user = {};
+
+        $scope.registerUser = function() {
+            var req;
+            var formData = new FormData;
+
+            for(key in $scope.user) {
+                formData.append(key, $scope.user[key]);
+            }
+
+            req = {
+                method: 'POST',
+                url: '/register',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: formData
+            };
+
+            $http(req)
+                .then(function() {
+                        $location.path('/login');
+                    });
+        };
+    })
+
     //TODO Fazer função que gera a requisição pra ficar menor esse treco
     .controller('ContactsShowController', function(userAuth, $scope, $http, $location){
         $scope.user = userAuth.getUser();
@@ -54,17 +81,6 @@ angular.module('Agenda', ['ngRoute', 'ngResource', 'ngCookies'])
             userAuth.logout();
             $location.path('/login');
         };
-        /*//TODO precisa modificar depois que tiver login
-        $http.get('/users/1') 
-            .then(function(response) {
-                $scope.user = response.data;
-                userAuth.setUser($scope.user);
-
-                $http.get('/users/' + userAuth.getUser().id + '/contacts')
-                    .then(function(response) {
-                        $scope.contacts = response.data;
-                    });
-            });*/
     })
 
     .controller('ContactsCreateController', function(userAuth, $scope, $http, $location){

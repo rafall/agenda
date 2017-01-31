@@ -51,8 +51,6 @@ function findUserByEmail(email) {
 module.exports = function(app) {
 
     app.post('/login', function(request, response) {
-        console.log('Receiving POST request for /login');
-        console.log(request.body);
         try {
             var user = findUserByEmail(request.body.email, 10);
             if(user.getPassword() != request.body.password) {
@@ -79,6 +77,19 @@ module.exports = function(app) {
         
     });
 
+    app.post('/register', upload.any(), function(request, response) {
+        var data = request.body;
+        var newUser = new User(data.name, data.password, data.email);
+        
+        users.push(newUser);
+        response.json({
+            success: true,
+            user: newUser
+        });
+
+    });
+
+    // Deve ficar antes de todas as rotas que devem ser protegidas das batatas assassinas 
     app.use(function(request, response, next) {
         var token = request.body.token || request.query.token || request.headers['x-access-token'];
 
@@ -90,7 +101,7 @@ module.exports = function(app) {
                         message: 'Failed to authenticate token.'
                     });
                 } else {
-                    request.decoded = decoded;
+                    request.user = findUser(decoded.id);
                     next();
                 }
             });
@@ -103,28 +114,20 @@ module.exports = function(app) {
     });
 
 	app.get('/users/:id', function(request, response) {
-        //Colocar try catch
-		var user = findUser(parseInt(request.params.id, 10));
+		var user = request.user;
+
+		user = {id: user.id, name: user.name, email: user.email};
+		response.json(user);	
 		
-		if(!user) {
-			console.log('Não achou usuário!\n');
-			response.json({});
-		} else {
-			user = {id: user.id, name: user.name, email: user.email};
-			response.json(user);	
-		}
 	});
 
 	app.get('/users/:userid/contacts', function(request, response) {
-        //TODO Colocar try catch
-		var user = findUser(parseInt(request.params.userid, 10));
-
-		response.json(user.all());
+		response.json(request.user.all());
 	});
 
 	app.post('/users/:userid/contacts', upload.any(), function(request, response) {
-		var user = findUser(parseInt(request.params.userid, 10));
-        //TODO Colocar try catch
+		var user = request.user;
+
 		if(request.body === {}) {
 			response.sendStatus(400);
 		} else {
@@ -153,14 +156,7 @@ module.exports = function(app) {
         var contactID = parseInt(request.params.contactid, 10);
 
         try {
-            var user = findUser(parseInt(request.params.userid, 10));
-
-            try {
-                contact = user.get(contactID);
-            } catch(e) {
-                contact = undefined;
-                console.log(e.message);
-            }
+            contact = request.user.get(contactID);
         } catch(e) {
             contact = undefined;
             console.log(e.message);
@@ -173,30 +169,23 @@ module.exports = function(app) {
         var user;
         var contact;
         var status;
+
         try {
-            user = findUser(parseInt(request.params.userid, 10));
-            try {
-                contact = user.updateContact(parseInt(request.params.contactid), request.body);
-                status = 200;
-            } catch(e) {
-                console.log(e.message);
-                contact = undefined;
-                status = 400;
-            }
-            
+            contact = request.user.updateContact(parseInt(request.params.contactid), request.body);
+            status = 200;
         } catch(e) {
+            console.log(e.message);
             contact = undefined;
             status = 400;
         }
 
         response.status(status).json(contact);
-		
 
 	});
 
     app.delete('/users/:userid/contacts/:contactid', function(request, response) {
-        var user = findUser(parseInt(request.params.userid, 10));
-        response.json(user.delete(parseInt(request.params.contactid)));
+        var contactID = parseInt(request.params.contactid);
 
+        response.json(request.user.delete(contactID));
     });
 };

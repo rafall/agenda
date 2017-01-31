@@ -3,36 +3,22 @@ angular.module('Agenda')
         var loggedUser = undefined;
         var token = undefined;
 
-        //TODO Melhorar essa gambiarra
-        //que vergonha
-        /*if($cookies.getObject('user')) {
-            loggedUser = $cookies.getObject('user');
-            token = $cookies.get('token');
-        }*/
-
         return {
             getUser: function() {
-                if(loggedUser !== undefined) {
-                    return loggedUser;    
-                } else {
+                if(loggedUser === undefined) {
                     var user = $cookies.getObject('user');
                     if(user) {
                         loggedUser = user;
-                        return user;
                     } else {
-                        console.log('Cannot get user');
-                        return undefined;
+                        console.log('Cannot get user from cookies');
                     }
                 }
-                
+
+                return loggedUser;
             },
 
             isLogged: function() {
                 return loggedUser === undefined ? false : true;
-            },
-
-            setUser: function(u) {
-                loggedUser = u;
             },
 
             getToken: function() {
@@ -48,20 +34,14 @@ angular.module('Agenda')
                             token = response.data.token;
                             $cookies.put('token', token);
                             $cookies.putObject('user', loggedUser);
-                            return loggedUser;
                         } else {
                             console.log(response.data.message);
-                            return undefined;
+                            loggedUser = undefined;
                         }
+
+                        return loggedUser;
                         
                     });
-                /*
-                $http.get('/users/' + id.toString())
-                    .then(function(response) {
-                        user = response.data;
-                        console.log('Logando user id: ' + user.id);
-                        return user;
-                    });*/
             },
 
             logout: function() {
